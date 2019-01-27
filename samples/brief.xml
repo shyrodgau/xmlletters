@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- use this with samplelayout.xml -->
+<brief  datum="2019-02-21" yourref="9706660994" contact="office" xmlns="http://xmlns.hydrografix.com/letters" xmlns:h="http://www.w3.org/1999/xhtml">
+ <an><z1>Struvxy AG</z1><z2>Abc Dept. 1 2 3</z2><z4>12345 Muster a.d. Bay</z4></an>
+ <betr>Beispiel Betreff</betr>
+ <anrede>Sehr geehrte Damen und Herren,</anrede>
+ <txt>
+lorem ipsum und so weiter, Sie wissen schon
+
+Bitte entschuldigen Sie das Versehen.</txt>
+<mfg>Mit freundlichen Grüßen
+
+Marga Walsch
+Sample, Inc.</mfg>
+</brief>
+

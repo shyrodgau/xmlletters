@@ -1,0 +1,366 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id$ -->
+
+<!--
+
+This is an example configuration file for FOP.
+This file contains the same settings as the default values
+and will have no effect if used unchanged.
+
+Relative config url's will be resolved relative to
+the location of this file.
+
+-->
+
+<!-- NOTE: This is the version of the configuration -->
+<fop version="1.0">
+
+    <accessibility>true</accessibility>
+  <!-- Base URL for resolving relative URLs -->
+    <base>.</base>
+  
+  <!-- Source resolution in dpi (dots/pixels per inch) for determining the size of pixels in SVG and bitmap images, default: 72dpi -->
+    <source-resolution>72</source-resolution>
+  <!-- Target resolution in dpi (dots/pixels per inch) for specifying the target resolution for generated bitmaps, default: 72dpi -->
+    <target-resolution>300</target-resolution>
+  
+  <!-- Default page-height and page-width, in case
+       value is specified as auto -->
+    <default-page-settings height="842pt" width="595pt"/>
+  
+  <!-- Information for specific renderers -->
+  <!-- Uses renderer mime type for renderers -->
+    <renderers>
+        <renderer mime="application/pdf">
+            <!--version>1.4</version-->
+            <merge-fonts>true</merge-fonts>
+            <filterList>
+        <!-- provides compression using zlib flate (default is on) -->
+                <value>flate</value>
+  
+        <!-- encodes binary data into printable ascii characters (default off)
+             This provides about a 4:5 expansion of data size -->
+        <!-- <value>ascii-85</value> -->
+  
+        <!-- encodes binary data with hex representation (default off)
+             This filter is not recommended as it doubles the data size -->
+        <!-- <value>ascii-hex</value> -->
+            </filterList>
+
+            <fonts>
+        <!--auto-detect/-->
+        <!-- embedded fonts -->
+        <!--
+        This information must exactly match the font specified
+        in the fo file. Otherwise it will use a default font.
+
+        For example,
+        <fo:inline font-family="Arial" font-weight="bold" font-style="normal">
+            Arial-normal-normal font
+        </fo:inline>
+        for the font triplet specified by:
+        <font-triplet name="Arial" style="normal" weight="bold"/>
+
+        If you do not want to embed the font in the pdf document
+        then do not include the "embed-url" attribute.
+        The font will be needed where the document is viewed
+        for it to be displayed properly.
+
+        possible styles: normal | italic | oblique | backslant
+        possible weights: normal | bold | 100 | 200 | 300 | 400
+                          | 500 | 600 | 700 | 800 | 900
+        (normal = 400, bold = 700)
+        -->
+
+        <!--
+        <font metrics-url="arial.xml" kerning="yes" embed-url="arial.ttf">
+          <font-triplet name="Arial" style="normal" weight="normal"/>
+          <font-triplet name="ArialMT" style="normal" weight="normal"/>
+        </font>
+        <font metrics-url="arialb.xml" kerning="yes" embed-url="arialb.ttf">
+          <font-triplet name="Arial" style="normal" weight="bold"/>
+          <font-triplet name="ArialMT" style="normal" weight="bold"/>
+        </font>
+        -->
+        
+      <!-- directory recursive="true">/usr/share/fonts/type1/gsfonts</directory>
+      <auto-detect/ -->
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunbmr.otf">
+                    <font-triplet name="CMUBright" style="normal" weight="normal"/>
+                    <font-triplet name="CMU Bright" style="normal" weight="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunbbx.otf">
+                    <font-triplet name="CMUBright" style="normal" weight="bold"/>
+                    <font-triplet name="CMU Bright" style="normal" weight="bold"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunbmo.otf">
+                    <font-triplet name="CMUBright" style="italic" weight="normal"/>
+                    <font-triplet name="CMU Bright" style="italic" weight="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunbxo.otf">
+                    <font-triplet name="CMUBright" style="italic" weight="bold"/>
+                    <font-triplet name="CMU Bright" style="italic" weight="bold"/>
+                </font>
+        <!--ZZZ ClassicalSerif -->
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunci.otf">
+                    <font-triplet name="CMUClassicalSerif" style="italic" weight="normal"/>
+                    <font-triplet name="CMU Classical Serif" style="normal" weight="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunorm.otf">
+                    <font-triplet name="CMUConcrete" style="normal" weight="normal"/>
+                    <font-triplet name="CMU Concrete" style="normal" weight="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunobx.otf">
+                    <font-triplet name="CMUConcrete" style="normal" weight="bold"/>
+                    <font-triplet name="CMU Concrete" style="normal" weight="bold"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunoti.otf">
+                    <font-triplet name="CMUConcrete" style="italic" weight="normal"/>
+                    <font-triplet name="CMU Concrete" style="italic" weight="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunobi.otf">
+                    <font-triplet name="CMUConcrete" style="italic" weight="bold"/>
+                    <font-triplet name="CMU Concrete" style="italic" weight="bold"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunss.otf">
+                    <font-triplet name="CMUSansSerif" style="normal" weight="normal"/>
+                    <font-triplet name="CMU Sans Serif" style="normal" weight="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunsx.otf">
+                    <font-triplet name="CMUSansSerif" style="normal" weight="bold"/>
+                    <font-triplet name="CMU Sans Serif" style="normal" weight="bold"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunsi.otf">
+                    <font-triplet name="CMUSansSerif" style="italic" weight="normal"/>
+                    <font-triplet name="CMU Sans Serif" style="italic" weight="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunso.otf">
+                    <font-triplet name="CMUSansSerif" style="italic" weight="bold"/>
+                    <font-triplet name="CMU Sans Serif" style="italic" weight="bold"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunrm.otf">
+                    <font-triplet name="CMUSerif" style="normal" weight="normal"/>
+                    <font-triplet name="CMU Serif" style="normal" weight="normal"/>
+                </font>
+                <font kerning="no" embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunrm.otf">
+                    <font-triplet name="nCMUSerif" style="normal" weight="normal"/>
+                    <font-triplet name="nCMU Serif" style="normal" weight="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunbx.otf">
+                    <font-triplet name="CMUSerif" style="normal" weight="bold"/>
+                    <font-triplet name="CMU Serif" style="normal" weight="bold"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunti.otf">
+                    <font-triplet name="CMUSerif" style="italic" weight="normal"/>
+                    <font-triplet name="CMU Serif" style="italic" weight="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunbi.otf">
+                    <font-triplet name="CMUSerif" style="italic" weight="bold"/>
+                    <font-triplet name="CMU Serif" style="italic" weight="bold"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmuntt.otf">
+                    <font-triplet name="CMUTypewriter" style="normal" weight="normal"/>
+                    <font-triplet name="CMU Typewriter Text" style="normal" weight="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmuntb.otf">
+                    <font-triplet name="CMUTypewriter" style="normal" weight="bold"/>
+                    <font-triplet name="CMU Typewriter Text" style="normal" weight="bold"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunit.otf">
+                    <font-triplet name="CMUTypewriter" style="italic" weight="normal"/>
+                    <font-triplet name="CMU Typewriter Text" style="italic" weight="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmuntx.otf">
+                    <font-triplet name="CMUTypewriter" style="italic" weight="bold"/>
+                    <font-triplet name="CMU Typewriter Text" style="italic" weight="bold"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunvt.otf">
+                    <font-triplet name="CMUTypewriterVariable" style="normal" weight="normal"/>
+                    <font-triplet name="CMU Typewriter Text Variable Width" style="normal" weight="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/cm-unicode/cmunvi.otf">
+                    <font-triplet name="CMUTypewriterVariable" style="italic" weight="normal"/>
+                    <font-triplet name="CMU Typewriter Text Variable Width" style="italic" weight="normal"/>
+                </font>
+                
+                <font embed-url="file:///home/hegny/prog/hcbriefe/fonts/lm/lmr12.pfb">
+                    <font-triplet name="LMRoman12" style="normal" weight="normal"/>
+                </font>
+                <font kerning="no" embed-url="file:///home/hegny/prog/hcbriefe/fonts/lm/lmr12.pfb">
+                    <font-triplet name="nLMRoman12" style="normal" weight="normal"/>
+                </font>
+                <font embed-url="file:///home/hegny/prog/hcbriefe/fonts/lm/lmri12.pfb">
+                    <font-triplet name="LMRoman12" style="italic" weight="normal"/>
+                </font>
+                <font embed-url="file:///home/hegny/prog/hcbriefe/fonts/lm/lmbx12.pfb">
+                    <font-triplet name="LMRoman12" style="normal" weight="bold"/>
+                </font>
+                <font embed-url="file:///home/hegny/prog/hcbriefe/fonts/lm/lmtt12.pfb">
+                    <font-triplet name="LMMono12" style="normal" weight="normal"/>
+                </font>
+                <font embed-url="file:///home/hegny/prog/hcbriefe/fonts/lm/lmss12.pfb">
+                    <font-triplet name="LMSans12" style="normal" weight="normal"/>
+                </font>
+
+                <font embed-url="file:///usr/share/fonts/truetype/linux-libertine/LinBiolinum_Kah.ttf">
+                    <font-triplet name="Linux Biolinum Keyboard" weight="normal" style="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/truetype/linux-libertine/LinBiolinum_Rah.ttf">
+                    <font-triplet name="Linux Biolinum" weight="normal" style="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/truetype/linux-libertine/LinBiolinum_RBah.ttf">
+                    <font-triplet name="Linux Biolinum Bold" weight="normal" style="normal"/>
+                    <font-triplet name="Linux Biolinum" weight="bold" style="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/truetype/linux-libertine/LinBiolinum_RIah.ttf">
+                    <font-triplet name="Linux Biolinum Italic" weight="normal" style="normal"/>
+                    <font-triplet name="Linux Biolinum" weight="normal" style="italic"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/truetype/linux-libertine/LinLibertine_DRah.ttf">
+                    <font-triplet name="Linux Libertine Display" weight="normal" style="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/truetype/linux-libertine/LinLibertine_I.ttf">
+                    <font-triplet name="Linux Libertine Initials" weight="normal" style="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/truetype/linux-libertine/LinLibertine_Mah.ttf">
+                    <font-triplet name="Linux Libertine Mono" weight="normal" style="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/truetype/linux-libertine/LinLibertine_Rah.ttf">
+                    <font-triplet name="Linux Libertine" weight="normal" style="normal"/>
+                </font>
+                <font kerning="no" embed-url="file:///usr/share/fonts/truetype/linux-libertine/LinLibertine_Rah.ttf">
+                    <font-triplet name="nLinux Libertine" weight="normal" style="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/truetype/linux-libertine/LinLibertine_RBah.ttf">
+                    <font-triplet name="Linux Libertine Bold" weight="normal" style="normal"/>
+                    <font-triplet name="Linux Libertine" weight="bold" style="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/truetype/linux-libertine/LinLibertine_RBIah.ttf">
+                    <font-triplet name="Linux Libertine Bold Italic" weight="normal" style="normal"/>
+                    <font-triplet name="Linux Libertine" weight="bold" style="italic"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/truetype/linux-libertine/LinLibertine_RIah.ttf">
+                    <font-triplet name="Linux Libertine Italic" weight="normal" style="normal"/>
+                    <font-triplet name="Linux Libertine" weight="normal" style="italic"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/truetype/linux-libertine/LinLibertine_RZah.ttf">
+                    <font-triplet name="Linux Libertine Semibold" weight="normal" style="normal"/>
+                    <font-triplet name="Linux Libertine" weight="600" style="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/truetype/linux-libertine/LinLibertine_RZIah.ttf">
+                    <font-triplet name="Linux Libertine Semibold Italic" weight="normal" style="normal"/>
+                    <font-triplet name="Linux Libertine" weight="600" style="italic"/>
+                </font>
+
+                <font embed-url="file:///usr/share/fonts/opentype/stix/STIXGeneral-Bold.otf">
+                    <font-triplet name="STIXGeneral" style="normal" weight="bold"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/stix/STIXGeneral-Regular.otf">
+                    <font-triplet name="STIXGeneral" style="normal" weight="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/stix/STIXGeneral-Italic.otf">
+                    <font-triplet name="STIXGeneral" style="italic" weight="normal"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/stix/STIXGeneral-BoldItalic.otf">
+                    <font-triplet name="STIXGeneral" style="italic" weight="bold"/>
+                </font>
+                <font embed-url="file:///usr/share/fonts/opentype/stix/STIXGeneral-Bold.otf">
+                    <font-triplet name="STIXGeneral" style="normal" weight="bold"/>
+                </font>
+
+
+            </fonts>
+
+      <!-- This option lets you specify additional options on an XML handler -->
+      <!--xml-handler namespace="http://www.w3.org/2000/svg">
+        <stroke-text>false</stroke-text>
+      </xml-handler-->
+        </renderer>
+
+        <renderer mime="application/postscript">
+      <!-- This option forces the PS renderer to rotate landscape pages -->
+            <auto-rotate-landscape>true</auto-rotate-landscape>
+            <optimize-resources>true</optimize-resources>
+      
+      <!-- This option lets you specify additional options on an XML handler -->
+      <!--xml-handler namespace="http://www.w3.org/2000/svg">
+        <stroke-text>false</stroke-text>
+      </xml-handler-->
+            <fonts>
+                <font metrics-url="file:///home/hegny/prog/hcbriefe/fop/univers.xml" kerning="yes" embed-url="file:///usr/share/fonts/type1/gsfonts/commercial/univers~ps/univers~f/uv______.pfb">
+                    <font-triplet name="Univers" style="normal" weight="normal"/>
+                </font>
+                <font metrics-url="file:///home/hegny/prog/hcbriefe/fop/euro.xml" kerning="no" embed-url="file:///usr/share/fonts/type1/gsfonts/commercial/adobe-euro/zpeurs.pfb">
+                    <font-triplet name="EuroSans-Regular" style="normal" weight="normal"/>
+                </font>
+        <!-- font metrics-url="file:///home/hegny/prog/hcbriefe/fop/ocra.xml" kerning="yes" embed-url="file:///usr/share/fonts/truetype/ttf-ocr-a/OCRA.ttf">
+          <font-triplet name="OCRA" style="normal" weight="normal"/>
+        </font -->
+        <!-- font metrics-url="file:///home/hegny/prog/hcbriefe/fop/ocrb.xml" kerning="yes" embed-url="file:///home/hegny/temp/PrecisionID OCR DEMO/PostScript/PrecisionID OCR B1 DEMO.pfb">
+          <font-triplet name="OCRB" style="normal" weight="normal"/>
+        </font -->
+                <font metrics-url="file:///home/hegny/prog/hcbriefe/fop/hcf.xml" kerning="no" embed-url="file:///usr/share/fonts/type1/gsfonts/hc/hcf.pfb">
+                    <font-triplet name="Hydrografix-f" style="normal" weight="normal"/>
+                </font>
+                <font metrics-url="file:///home/hegny/prog/hcbriefe/fop/bbr.xml" kerning="yes" embed-url="file:///usr/share/fonts/type1/gsfonts/commercial/bauer-bodoni/bbr_____.pfb">
+                    <font-triplet name="BauerBodoni-Roman" style="normal" weight="normal"/>
+                </font>
+                <font metrics-url="file:///home/hegny/prog/hcbriefe/fop/hchc.xml" kerning="no" embed-url="file:///usr/share/fonts/type1/gsfonts/hc/hchc.pfb">
+                    <font-triplet name="Hydrografix-hC" style="normal" weight="normal"/>
+                </font>
+            </fonts>
+        </renderer>
+
+        <renderer mime="application/vnd.hp-PCL"></renderer>
+
+    <!-- MIF does not have a renderer
+    <renderer mime="application/vnd.mif">
+    </renderer>
+    -->
+
+        <renderer mime="image/svg+xml">
+            <format type="paginated"/>
+            <link value="true"/>
+            <strokeText value="false"/>
+        </renderer>
+
+        <renderer mime="application/awt"></renderer>
+
+        <renderer mime="image/png">
+      <!--transparent-page-background>true</transparent-page-background--></renderer>
+
+        <renderer mime="image/tiff">
+      <!--transparent-page-background>true</transparent-page-background-->
+      <!--compression>CCITT T.6</compression--></renderer>
+
+        <renderer mime="text/xml"></renderer>
+
+    <!-- RTF does not have a renderer
+    <renderer mime="text/rtf">
+    </renderer>
+    -->
+
+        <renderer mime="text/plain">
+            <pageSize columns="80"/>
+        </renderer>
+
+    </renderers>
+
+</fop>
+

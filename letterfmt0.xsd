@@ -1,0 +1,577 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    targetNamespace="http://xmlns.hydrografix.com/letters"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified"
+    xmlns:y="http://xmlns.hydrografix.com/letters"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xml:lang="en">
+
+  <!-- Import xml: namespace -->
+  <xsd:import namespace="http://www.w3.org/XML/1998/namespace"
+        schemaLocation="http://www.w3.org/2001/xml.xsd" />
+  <!-- Import html: namespace -->
+  <xsd:import namespace="http://www.w3.org/1999/xhtml" 
+        schemaLocation="http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd"/>
+
+  <xsd:annotation>
+    <xsd:documentation>
+     <![CDATA[EN: First basic Schema for xml-xsl-fo-pdf Letter formatter
+     Version 20190126 with embed
+     DE: Erster Schemaentwurf für xml-xsl-fo-pdf Formatierer.]]>
+    </xsd:documentation>
+  </xsd:annotation>
+
+<!--                         -->
+<!--    T O P  L E V E L S   -->
+<!--                         -->
+  <xsd:element name="brief" id="brief" type="y:BriefType">
+      <xsd:annotation>
+        <xsd:documentation>
+         <![CDATA[EN: German language top level letter/Brief element
+	 DE: Top Element für deutschsprachgen Brief]]>
+        </xsd:documentation>
+      </xsd:annotation>
+  </xsd:element>
+  
+  <xsd:element name="letter" id="letter" type="y:BriefType">
+      <xsd:annotation>
+        <xsd:documentation>
+         English language top level letter element
+        </xsd:documentation>
+      </xsd:annotation>
+  </xsd:element>
+  
+  <xsd:element name="briefkopf" id="briefkopf" type="y:BriefkopfType">
+      <xsd:annotation>
+        <xsd:documentation>
+         <![CDATA[EN: German language top level letterhead/Briefkopf-only element
+	 DE: Top Element für deutschsprachigen Briefkopf]]>
+        </xsd:documentation>
+      </xsd:annotation>
+  </xsd:element>
+  
+  <xsd:element name="letterhead" id="letterhead" type="y:BriefkopfType">
+      <xsd:annotation>
+        <xsd:documentation>
+         English language top level letterhead-only element
+        </xsd:documentation>
+      </xsd:annotation>
+  </xsd:element>
+  
+  <xsd:element name="briefe" id="briefe" type="y:BriefeType">
+      <xsd:annotation>
+        <xsd:documentation>
+         <![CDATA[EN: German language top level serial letter/Serienbrief element
+	 DE: Top Element für deutschsprachige Serienbriefe]]>
+        </xsd:documentation>
+      </xsd:annotation>
+  </xsd:element>
+  
+  <xsd:element name="letters" id="letters" type="y:LettersType">
+      <xsd:annotation>
+        <xsd:documentation>
+         English language top level serial letter element
+        </xsd:documentation>
+      </xsd:annotation>
+  </xsd:element>
+  
+  <xsd:element name="invoice" id="invoice" type="y:InvoiceType">
+      <xsd:annotation>
+        <xsd:documentation>
+         English language top level invoice element
+        </xsd:documentation>
+      </xsd:annotation>
+  </xsd:element>
+  
+  <xsd:element name="rechnung" id="rechnung" type="y:InvoiceType">
+     <xsd:annotation>
+        <xsd:documentation>
+         <![CDATA[EN: German language top level invoice/Rechnung element
+ 	 DE: Top Element für deutschsprachige Rechnung]]>
+        </xsd:documentation>
+      </xsd:annotation>
+  </xsd:element>
+  
+  <xsd:element name="lieferschein" id="lieferschein" type="y:LieferscheinType">
+     <xsd:annotation>
+        <xsd:documentation>
+         <![CDATA[EN: German language top level Lieferschein element, currently no other language
+	 DE: Top Element für deutschsprachigen Lieferschein]]>
+        </xsd:documentation>
+      </xsd:annotation>
+  </xsd:element>
+<!--                         -->
+<!--    E L E M E N T S      -->
+<!--                         -->
+    
+<!--                         -->
+<!-- C O M P L E X  T Y P E S-->
+<!--                         -->
+
+<!--                         -->
+<!-- T E X T                 -->
+<!--                         -->
+  <xsd:complexType name="TxtType" id="TxtType" mixed="true">
+     <xsd:annotation>
+        <xsd:documentation>
+         <![CDATA[EN: Element specifying letter/brief text or rechnungsposition-text or mfg or most texts for invoice or rechnung. 
+May be formatted with <h:i>..</h:i> (italic) or <h:b>..</h:b> (bold) or <h:br/> (force linebreak)
+	DE: Element für normale formatierbare Texte in Briefen, Rechnungspositionen, mfg etc. 
+Kann mit <h:i>..</h:i> (kursiv), <h:b>..</h:b> (fett) oder <h:br/> (erzwinge Zeilenumbruch) formatiert werden]]>
+        </xsd:documentation>
+      </xsd:annotation>
+        <xsd:complexContent>
+            <xsd:extension base="xsd:anyType">
+                <xsd:sequence maxOccurs="unbounded" minOccurs="0">
+                    <xsd:any  maxOccurs="unbounded" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+  </xsd:complexType>
+  
+  <xsd:complexType name="MorePS" id="MorePS" mixed="true">
+     <xsd:annotation>
+        <xsd:documentation>
+         <![CDATA[allow more consecutive ps elements even in the rechnung's xsd:all]]>
+        </xsd:documentation>
+      </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="ps" type="y:TxtType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+  </xsd:complexType>
+  
+<!--                         -->
+<!-- "A N Z A H L" (rechng.) -->
+<!--               (invoice) -->
+  <xsd:complexType name="AnzType" id="AnzType" mixed="true">
+     <xsd:annotation>
+        <xsd:documentation>
+         <![CDATA[EN: Element specifying mix of any and a <num> element. 
+May be formatted with <h:i>..</h:i> (italic) or <h:b>..</h:b> (bold) or <h:br/> (force linebreak)
+	DE: Element für Anzahl in Rechnung, mix aus any und <num> Element, z.B. <anz><num>3.5</num><h:i>h</h:i></num> für 3,5 Stunden]]>
+        </xsd:documentation>
+      </xsd:annotation>
+        <xsd:complexContent>
+         <xsd:extension base="y:TxtType">
+           <xsd:choice>
+            <!--  actual number          -->
+                <xsd:element name="num" minOccurs="1" maxOccurs="1" type="xsd:decimal"/>
+                <xsd:any  maxOccurs="unbounded" minOccurs="0"/>
+           </xsd:choice>
+         </xsd:extension>
+        </xsd:complexContent>
+  </xsd:complexType>
+  
+<!--                         -->
+<!-- B R I E F/L E T T E R   -->
+<!--                         -->
+  <xsd:complexType name="BriefType" id="BriefType">
+      <xsd:annotation>
+        <xsd:documentation>
+         <![CDATA[EN: generic top level letter/Brief element type
+	 DE: top level Typ für letter und brief]]>
+        </xsd:documentation>
+      </xsd:annotation>
+    <xsd:sequence>
+      <!--  overlay/append if needed -->
+      <xsd:element name="overlay" minOccurs="0" maxOccurs="1" type="y:OverlayType"/>
+      <xsd:element name="append" minOccurs="0" maxOccurs="1" type="y:AppendType"/>
+      <xsd:element name="embed" minOccurs="0" maxOccurs="1" type="y:EmbedType"/>
+      <!--  addresse                 -->
+      <xsd:element name="an" minOccurs="1" maxOccurs="1" type="y:EmpfAddrType"/>
+      <!--  subject/betreff          -->
+      <xsd:element name="betr" minOccurs="1" maxOccurs="1" type="xsd:string">
+         <xsd:annotation>
+            <xsd:documentation>
+             Element specifying subject/Betreff of letter or brief
+            </xsd:documentation>
+          </xsd:annotation>
+      </xsd:element>
+      <!--  anrede                   -->
+      <xsd:element name="anrede" minOccurs="1" maxOccurs="1" type="xsd:string">
+         <xsd:annotation>
+            <xsd:documentation>
+             Element specifying Anrede/addressing of letter or brief
+            </xsd:documentation>
+          </xsd:annotation>
+      </xsd:element>
+      <!--  t e x t                  -->
+      <!-- xsd:element ref="y:txt" minOccurs="1" maxOccurs="unbounded"/ -->
+      <xsd:element name="txt" type="y:TxtType" minOccurs="1" maxOccurs="unbounded"/>
+      <!--  closing/gruss            -->
+      <xsd:element name="mfg" type="y:TxtType" minOccurs="1" maxOccurs="1"/>
+      <!--  anlagen                  -->
+      <xsd:element name="anlage" type="y:TxtType" minOccurs="0" maxOccurs="1">
+         <xsd:annotation>
+            <xsd:documentation>
+             Element specifying text for Anlagen/Enclosures
+            </xsd:documentation>
+          </xsd:annotation>
+      </xsd:element>
+      <!--  post scriptum            -->
+      <xsd:element name="ps" type="y:TxtType" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attributeGroup ref="y:stdattrs"/>
+  </xsd:complexType>
+
+<!--                         -->
+<!-- B R I E F K O P F /     -->
+<!--  L E T T E R H E A D    -->
+  <xsd:complexType name="BriefkopfType" id="BriefkopfType">
+      <xsd:annotation>
+        <xsd:documentation>
+         generic top level empty letterhead/Briefkopf element type
+        </xsd:documentation>
+      </xsd:annotation>
+    <xsd:sequence>
+      <!--  overlay/append if needed -->
+      <xsd:element name="overlay" minOccurs="0" maxOccurs="1" type="y:OverlayType"/>
+      <xsd:element name="append" minOccurs="0" maxOccurs="1" type="y:AppendType"/>
+      <xsd:element name="embed" minOccurs="0" maxOccurs="1" type="y:EmbedType"/>
+      <!--  addresse                 -->
+      <xsd:element name="an" minOccurs="0" maxOccurs="1" type="y:EmpfAddrType"/>
+      <!--  subject/betreff          -->
+      <xsd:element name="betr" minOccurs="0" maxOccurs="1" type="xsd:string">
+         <xsd:annotation>
+            <xsd:documentation>
+             Element specifying subject/Betreff of letter or brief
+            </xsd:documentation>
+          </xsd:annotation>
+      </xsd:element>
+      <!--  anrede                   -->
+      <xsd:element name="anrede" minOccurs="0" maxOccurs="1" type="xsd:string">
+         <xsd:annotation>
+            <xsd:documentation>
+             Element specifying Anrede of letter or brief
+            </xsd:documentation>
+          </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+    <xsd:attributeGroup ref="y:stdattrs"/>
+  </xsd:complexType>
+
+<!--                            -->
+<!-- B R I E F E /L E T T E R S -->
+<!--                            -->
+  <xsd:complexType name="BriefeType" id="BriefeType">
+      <xsd:annotation>
+        <xsd:documentation>
+         generic top level serial letters/Serienbrief element type
+        </xsd:documentation>
+      </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="brief" type="y:BriefType" minOccurs="1" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attributeGroup ref="y:stdattrs"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="LettersType" id="LettersType">
+      <xsd:annotation>
+        <xsd:documentation>
+         generic top level serial letters/Serienbrief element type
+        </xsd:documentation>
+      </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="letter" type="y:BriefType" minOccurs="1" maxOccurs="unbounded"/>
+    </xsd:sequence>
+    <xsd:attributeGroup ref="y:stdattrs"/>
+  </xsd:complexType>
+
+<!--                         -->
+<!-- R E C H N G/I N V O I C -->
+<!--                         -->
+  <xsd:complexType name="InvoiceType" id="InvoiceType">
+      <xsd:annotation>
+        <xsd:documentation>
+         generic top level rechnung/invoice type
+        </xsd:documentation>
+      </xsd:annotation>
+    <!-- the stuff may occur in any order -->
+    <xsd:all>
+      <!--  overlay/append if needed -->
+      <xsd:element name="overlay" minOccurs="0" maxOccurs="1" type="y:OverlayType"/>
+      <xsd:element name="append" minOccurs="0" maxOccurs="1" type="y:AppendType"/>
+      <xsd:element name="embed" minOccurs="0" maxOccurs="1" type="y:EmbedType"/>
+      <!--  addresse                 -->
+      <xsd:element name="an" minOccurs="1" maxOccurs="1" type="y:EmpfAddrType"/>
+      <!--  customer number          -->
+      <xsd:element name="kdnr" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1"/>
+      <!--  lieferdatum              -->
+      <xsd:element name="lieferdatum" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <!--  zahlungsbedingungen      -->
+      <xsd:element name="zahlbed" type="y:TxtType" minOccurs="0" maxOccurs="1"/>
+      <!--  rechnungspositionen      -->
+      <xsd:element name="positionen" minOccurs="1" maxOccurs="1">
+         <xsd:annotation>
+            <xsd:documentation>
+             element containing all Rechnungspositionen
+            </xsd:documentation>
+          </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="y:RechnungPositionenType"/>
+        </xsd:complexType>
+      </xsd:element>
+      <!--  anlagen                  -->
+      <xsd:element name="anlage" type="y:TxtType" minOccurs="0" maxOccurs="1">
+         <xsd:annotation>
+            <xsd:documentation>
+             Element specifying text for Anlagen/Enclosures
+            </xsd:documentation>
+          </xsd:annotation>
+      </xsd:element>
+      <!--  post scriptum            -->
+      <!--  only 1 ps                -->
+      <xsd:element name="ps" type="y:TxtType" minOccurs="0" maxOccurs="1"/>
+      <!--  if need more use pss/ps  -->
+      <xsd:element name="pss" type="y:MorePS" minOccurs="0" maxOccurs="1"/>
+    </xsd:all>
+    <xsd:attributeGroup ref="y:stdattrs"/>
+    <!--  rechnungsnummer         -->
+    <xsd:attribute name="nr" type="xsd:string" use="required"/>
+    <!--  VAT ID receiver         -->
+    <xsd:attribute name="vatidrec" type="xsd:string" use="optional"/>
+    <!--  ustpflichtig ist rechnungsempfaenger  -->
+    <xsd:attribute name="novat" type="xsd:string" use="optional"/>
+  </xsd:complexType>
+
+<!--                         -->
+<!-- L I E F E R S C H E I N -->
+<!--                         -->
+  <xsd:complexType name="LieferscheinType" id="LieferscheinType">
+      <xsd:annotation>
+        <xsd:documentation>
+         generic top level lieferschein type
+        </xsd:documentation>
+      </xsd:annotation>
+    <xsd:all>
+      <!--  overlay/append if needed -->
+      <xsd:element name="overlay" minOccurs="0" maxOccurs="1" type="y:OverlayType"/>
+      <xsd:element name="append" minOccurs="0" maxOccurs="1" type="y:AppendType"/>
+      <xsd:element name="embed" minOccurs="0" maxOccurs="1" type="y:EmbedType"/>
+      <!--  addresse                 -->
+      <xsd:element name="an" minOccurs="1" maxOccurs="1" type="y:EmpfAddrType"/>
+      <!--  rechnungspositionen      -->
+      <xsd:element name="positionen" minOccurs="1" maxOccurs="1">
+         <xsd:annotation>
+            <xsd:documentation>
+             element containing all Rechnungspositionen
+            </xsd:documentation>
+          </xsd:annotation>
+        <xsd:complexType>
+            <xsd:group ref="y:LieferscheinPositionenType"/>
+        </xsd:complexType>
+      </xsd:element>
+      <!--  lieferdatum              -->
+      <xsd:element name="lieferdatum" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <!--  customer number          -->
+      <xsd:element name="kdnr" type="xsd:positiveInteger" minOccurs="0" maxOccurs="1"/>
+      <!--  zahlungsbedingungen      -->
+      <xsd:element name="zahlbed" type="y:TxtType" minOccurs="0" maxOccurs="1"/>
+      <!--  anlagen                  -->
+      <xsd:element name="anlage" type="y:TxtType" minOccurs="0" maxOccurs="1">
+         <xsd:annotation>
+            <xsd:documentation>
+             Element specifying text for Anlagen/Enclosures
+            </xsd:documentation>
+          </xsd:annotation>
+      </xsd:element>
+      <!--  post scriptum            -->
+      <xsd:element name="ps" type="y:TxtType" minOccurs="0"/>
+    </xsd:all>
+    <xsd:attributeGroup ref="y:stdattrs"/>
+    <!--  lieferschein nummer     -->
+    <xsd:attribute name="nr" type="xsd:string" use="optional"/>
+  </xsd:complexType>
+
+<!--                                -->
+<!-- R E C H N G S P O S I T I O N  -->
+<!--                                -->
+  <xsd:group name="RechnungPositionenType" id="RechnungPositionenType">
+     <xsd:annotation>
+        <xsd:documentation>
+         group specifying Rechnungspositionen
+        </xsd:documentation>
+      </xsd:annotation>
+    <xsd:sequence>
+        <xsd:element name="position" minOccurs="1" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+                <!--  positions text         -->
+                <xsd:element name="txt" type="y:TxtType" minOccurs="1" maxOccurs="1"/>
+                <!--  anzahl quantity        -->
+                <xsd:element  minOccurs="1" maxOccurs="1" name="anz" type="y:AnzType"/>
+                <!--  Mswt satz  / V A T perc    -->
+                <xsd:element name="mwst" minOccurs="1" maxOccurs="1" type="xsd:decimal"/>
+                <!--  Einzelpreis            -->
+                <xsd:element name="satz" minOccurs="1" maxOccurs="1" type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  
+  <xsd:group name="LieferscheinPositionenType" id="LieferscheinPositionenType">
+     <xsd:annotation>
+        <xsd:documentation>
+         group specifying positions of lieferschein
+        </xsd:documentation>
+      </xsd:annotation>
+    <xsd:sequence>
+        <xsd:element name="position" minOccurs="1" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+                <!--  positions text         -->
+                <xsd:element name="txt" type="y:TxtType" minOccurs="1" maxOccurs="1"/>
+                <!--  anzahl quantity        -->
+                <xsd:element  minOccurs="1" maxOccurs="1" name="anz" type="y:AnzType"/>
+                <!--  Mswt satz optional here-->
+                <xsd:element name="mwst" minOccurs="0" maxOccurs="1" type="xsd:decimal"/>
+                <!--  Einzelpreis optional   -->
+                <xsd:element name="satz" minOccurs="0" maxOccurs="1" type="xsd:decimal"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+    </xsd:sequence>
+  </xsd:group>
+  
+<!--                         -->
+<!-- A D R E S S E           -->
+<!--                         -->
+  <xsd:complexType name="EmpfAddrType" id="EmpfAddrType">
+     <xsd:annotation>
+        <xsd:documentation>
+         type specifying the lines of the receivers addresse
+        </xsd:documentation>
+      </xsd:annotation>
+    <xsd:sequence>
+      <!--  zeilen der adresse     -->
+      <xsd:element name="zust" minOccurs="0" maxOccurs="1" type="xsd:string">
+     <xsd:annotation>
+        <xsd:documentation>
+         Zustellerhinweis - Nicht Nachsenden or similar
+        </xsd:documentation>
+      </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="z1" minOccurs="0" maxOccurs="1" type="xsd:string">
+     <xsd:annotation>
+        <xsd:documentation>
+         1st address line, if only 3 are needed, use z2-z4
+        </xsd:documentation>
+      </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="z2" minOccurs="1" maxOccurs="1" type="xsd:string">
+     <xsd:annotation><xsd:documentation>2nd address line</xsd:documentation></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="z3" minOccurs="0" maxOccurs="1" type="xsd:string">
+     <xsd:annotation><xsd:documentation>3rd address line</xsd:documentation></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="z4" minOccurs="0" maxOccurs="1" type="xsd:string">
+     <xsd:annotation><xsd:documentation>4th address line</xsd:documentation></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="z5" minOccurs="0" maxOccurs="1" type="xsd:string">
+     <xsd:annotation><xsd:documentation>5th address line</xsd:documentation></xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+<!--                         -->
+<!-- O V L/A P P/E M B E D   -->
+<!--                         -->
+  <xsd:complexType name="OverlayType" id="OverlayType">
+     <xsd:annotation>
+        <xsd:documentation>
+         type specifying an overlay document e.g. saved text with office application. When type is pdf, requires https://xmlgraphics.apache.org/fop/fop-pdf-images.html
+        </xsd:documentation>
+      </xsd:annotation>
+    <xsd:attributeGroup ref="y:overlayattrs"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="AppendType" id="AppendType">
+     <xsd:annotation>
+        <xsd:documentation>
+         type specifying an append document or image e.g. scanned signed timesheet. When type is pdf, requires https://xmlgraphics.apache.org/fop/fop-pdf-images.html
+        </xsd:documentation>
+      </xsd:annotation>
+    <xsd:attributeGroup ref="y:overlayattrs"/>
+    <!--  page sequence name     -->
+    <xsd:attribute name="fmt" type="xsd:string" use="optional" default="blank"/>
+    <xsd:attribute name="rotate" type="xsd:integer" use="optional" default="0"/>
+  </xsd:complexType>
+  
+  <xsd:complexType name="EmbedType" id="EmbedType">
+     <xsd:annotation>
+        <xsd:documentation>
+         type specifying an embedded document or image e.g. signed pdf
+        </xsd:documentation>
+      </xsd:annotation>
+    <xsd:attribute name="doc" type="xsd:string" use="required"/>
+    <!--  alternate text if imaage -->
+    <xsd:attribute name="alttext" type="xsd:string" use="optional"/>
+    <!-- linklocation -->
+    <!-- currently only encl | anlage -->
+    <xsd:attribute name="linklocation" type="xsd:string" use="optional" default="anlage"/>
+    <!-- alternate filename -->
+    <xsd:attribute name="filename" type="xsd:string" use="optional"/>
+  </xsd:complexType>
+  
+  <xsd:attributeGroup name="stdattrs" id="stdattrs">
+     <xsd:annotation>
+        <xsd:documentation>
+         standard attributes of all top level elements rechnung, letter etc.
+        </xsd:documentation>
+      </xsd:annotation>
+    <!--  language                 -->
+    <xsd:attribute ref="xml:lang" use="optional"/>
+    <!--  datum any format         -->
+    <xsd:attribute name="datum" type="xsd:string" use="optional"/>
+    <!--  normalized date yyyy-mm-dd    -->
+    <xsd:attribute name="datenorm" type="xsd:string" use="optional"/>
+    <!--  hegny / junker           -->
+    <xsd:attribute name="contact" type="xsd:string" use="optional" default="hegny"/>
+    <!--  partner reference        -->
+    <xsd:attribute name="yourref" type="xsd:string" use="optional"/>
+    <!--  override page format     -->
+    <xsd:attribute name="fmt" type="xsd:string" use="optional"/>
+    <!--  override master fo       -->
+    <xsd:attribute name="master" type="xsd:string" use="optional"/>
+    <!--  control window title     -->
+    <xsd:attribute name="wintitle" type="xsd:boolean" use="optional"/>
+
+    <!-- layout modifications -->
+    <xsd:attribute name="pagenumbers" type="xsd:string" use="optional"/>
+    <!-- pagenumbers values: yes | no | ifmore /* show pagenumbers iff more than one page */ -->
+    <xsd:attribute name="footfirst" type="xsd:string" use="optional"/>
+    <xsd:attribute name="footonly" type="xsd:string" use="optional"/>
+    <xsd:attribute name="footrest" type="xsd:string" use="optional"/>
+    <xsd:attribute name="footlast" type="xsd:string" use="optional"/>
+    <!-- foot..* values: no | <name of foot in layout> -->
+    <xsd:attribute name="headerfirst" type="xsd:string" use="optional"/>
+    <xsd:attribute name="headerrest" type="xsd:string" use="optional"/>
+    <!-- header..* values: no | <name of header in layout> -->
+    <xsd:attribute name="visisig" type="xsd:string" use="optional"/>
+    <!-- visisig values: no | first | last /* page for visible signature */ -->
+    <xsd:attribute name="vers" type="xsd:string" use="optional"/>
+    <!-- vers /* ion on page */ values: np | first | last /* page where the versions are shown bottom left */ -->
+    <xsd:attribute name="foldfirst" type="xsd:string" use="optional"/>
+    <xsd:attribute name="foldrest" type="xsd:string" use="optional"/>
+    <!-- fold..* values: no | A | B /* A: 87 148.5 192 mm B: 105 148.5 210 mm C: 96 148.5 201 mm -->
+  </xsd:attributeGroup>
+
+  <xsd:attributeGroup name="overlayattrs" id="overlayattrs">
+     <xsd:annotation>
+        <xsd:documentation>
+         standard attributes of append and overlay
+        </xsd:documentation>
+      </xsd:annotation>
+    <!--  document               -->
+    <xsd:attribute name="doc" type="xsd:string" use="required"/>
+    <!--  number of pages if != 1-->
+    <xsd:attribute name="npages" type="xsd:positiveInteger" use="optional" default="1"/>
+    <!--  alternate text if imaage -->
+    <xsd:attribute name="alttext" type="xsd:string" use="optional"/>
+  </xsd:attributeGroup>
+
+  
+</xsd:schema>
+

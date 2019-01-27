@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- use with samplelayout.xml -->
+<rechnung fmt="dinbrief_formb" datum="2017-04-18" nr="2017-004" yourref="Bestell-Nr. 1234567794" contact="berta" datenorm="2017-04-18" xmlns="http://xmlns.hydrografix.com/letters" xmlns:h="http://www.w3.org/1999/xhtml">
+ <an><z1>Some AG</z1><z2>Some Dept. </z2><z4>12345 Muster / Bay.</z4></an>
+ <positionen>
+ <position>
+ <txt>
+Lieferung Brotkrumen<h:br/>2. Wahl</txt>
+ <anz><num>1</num></anz><mwst>19</mwst><satz>10000.00</satz></position>
+ <position>
+ <txt>
+Lieferung Sahneschnitten<h:br/>Zuckerfrei, 1. Wahl</txt>
+ <anz><num>1</num></anz><mwst>9</mwst><satz>15940.00</satz></position>
+  </positionen>
+ <lieferdatum>1. Feb. 2017 - 30. März 2017</lieferdatum>
+ <kdnr>12345</kdnr>
+ <zahlbed>90 Tage ohne Abzug</zahlbed>
+</rechnung>
+

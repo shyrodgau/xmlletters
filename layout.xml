@@ -1,0 +1,486 @@
+<config xmlns="http://xmlns.hydrografix.com/letters/config" 
+   xmlns:y="http://xmlns.hydrografix.com/letters"
+   xmlns:fo="http://www.w3.org/1999/XSL/Format" version="$Id$">
+
+<modgroups>
+    <modgroup name="*default*" mods="versfont:LMMono12"/>
+    <modgroup name="lm"          mods="addrfont:LMRoman12,ntextfont:nLMRoman12,textfont:LMRoman12,versfont:LMMono12"/>
+    <modgroup name="snail_lm" mods="addrfont:LMSans12,ntextfont:nLMRoman12,textfont:LMRoman12,versfont:LMMono12"/>
+    <modgroup name="libertine" mods="addrfont:Linux Libertine,ntextfont:nLinux Libertine,textfont:Linux Libertine,versfont:Linux Libertine Mono,sansfont:Linux Biolinum"/>
+    <modgroup name="snail_libertine" mods="addrfont:Linux Biolinum,ntextfont:nLinux Libertine,textfont:Linux Libertine,versfont:Linux Libertine Mono,sansfont:Linux Biolinum"/>
+    <modgroup name="classic" mods="addrfont:Times,ntextfont:nTimes,textfont:Times,versfont:Courier,sansfont:Helvetica"/>
+    <modgroup name="snail_classic" mods="addrfont:Helvetica,ntextfont:nTimes,textfont:Times,versfont:Courier,sansfont:Helvetica"/>
+    <modgroup name="mono" mods="color:#e8e8e8"/>
+</modgroups>
+
+<contacts>
+    <contact ref="berta" name="Dr. phil. Berta Mustermann" xlposition="manager" email="muster@sample.inc" tel="+49,123,3456784" fax="+49,1234,567894"/>
+    <contact ref="office" name="Marga Welsch" xlposition="officemanager" email="office@sample.inc" tel="+49,123,3456784" fax="+49,1234,567894"/>
+    <contact ref="anton" name="Dipl.-Ing. Anton Webs" xlposition="manager" email="anton@sample.inc" tel="+49,1234,98765431" fax="+49,1234,567895"/>
+</contacts>
+
+<types>
+    <type names="brief,letter,letterhead,briefkopf"   master="letter_outline.fo"        short="br" defaultlayout="dinbrief"          multi="0"  mode="letter"/>
+    <type names="briefe,letters"                      master="letter_outline.fo"        short="br" defaultlayout="dinbrief_nopg"     multi="1"  mode="letter"/>
+    <type names="rechnung,invoice"                    master="invoice_outline.fo"       short="re" defaultlayout="dinbrief"       multi="0"  mode="bill"/>
+    <type names="lieferschein"                        master="invoice_outline.fo"   short="ls" defaultlayout="dinbrief"      multi="0"  mode="bill"/>
+</types>
+
+<layouts>
+    <layout name="plain" 
+        pagenumbers="no" 
+        footfirst="addr" 
+        footlast="addr" 
+        footrest="addr" 
+        visisig="no" 
+        headerfirst="logo" 
+        headerrest="logo" 
+        vers="last"  
+        foldfirst="A"/>    
+    <layout name="dinbrief"
+        footfirst="legal" 
+        footlast="addr" 
+        headerfirst="LHA" 
+        headerrest="logo"/>
+    <layout name="dinbrief_nopg"
+        footfirst="legal" 
+        pagenumbers="no"
+        footlast="addr" 
+        headerfirst="LHA" 
+        headerrest="logo"/>
+    <layout name="dinbrief_sig" 
+        footfirst="legal" 
+        footlast="addr" 
+        headerfirst="LHA" 
+        headerrest="logo"  
+        visisig="last"/>
+    <layout name="dinbrief_formb" 
+        footfirst="legal" 
+        footlast="addr" 
+        headerfirst="LHB" 
+        headerrest="logo"/>
+    <layout name="infobrief" 
+        footfirst="addr" 
+        footlast="no" 
+        headerfirst="LHA" 
+        headerrest="logo"/>
+    <layout name="infobrief_formb" 
+        footfirst="addr" 
+        footlast="no" 
+        headerfirst="LHB" 
+        headerrest="logo"/>
+</layouts>
+<!-- what                            values                         relevant xsl-fo        explanation
+                                     *: default /:name
+     ==============================================================================================================
+     pagenumbers:                    no | yes | *ifmore*            (above after)
+     foot...first|rest|last|only:    /legal/ | /addr/ | no          (after)                (*no* for ..rest/..last, first MUST be given, ..only defaults to ..first)
+     visisig:                        *no* | first | last            (body / margin-bottom)
+     header...first|rest:            /LHA/ | /LHB/ | /logo/ | no    (before)               (no default)
+     fold...first|rest:              A | B | no                     (start)                (*@foldfirst* if given, depends on format of headerfirst for all, no otherwise)
+     vers: (ion on page)             *first* | last | no            (start)
+-->
+
+<!-- some DETAILS -->
+<visiblesignature height="40pt" top="167pt"/>
+
+
+<pageno vextent="12mm">
+    <fo:block-container position="absolute" left="2.5cm" width="15.3cm" top="5mm" font-family="LMRoman12" y:mark="mod:font-family:textfont" font-size="9pt">
+        <fo:block text-align="right"><y:xlate k="seite"/> <fo:page-number/>/<fo:page-number-citation y:mark="lastpageref" ref-id="lastpg"/></fo:block>
+     </fo:block-container>
+</pageno>
+
+<!-- // some DETAILS -->
+
+
+<!-- foots / heads -->
+<foot bbox="1mm 1mm 1mm 1mm" vextent="27mm" name="legal">
+    <!-- footer mit legaldaten -->
+   <fo:block-container position="absolute" left="14mm" top="-1mm">
+    <fo:block-container position="absolute" left="1cm" width="17cm" height="17mm" top="8mm"  y:mark="mod:border-left-color:color,font-family:sansfont" border-left-color="blue" border-left-style="solid" border-left-width="1mm" font-family="LMSans12" font-size="7pt">
+        <fo:block-container position="absolute" top="1mm" left="0mm" width="100%">
+        <fo:block width="100%"><fo:leader leader-length.optimum="6cm"/></fo:block>
+        </fo:block-container>
+        <fo:block-container position="absolute" top="-4mm" left="0cm" width="95%" height="24mm">
+        <fo:block font-size="19mm" height="15mm" width="95%" border-right-color="blue"  y:mark="mod:border-right-color:color" border-right-style="solid" border-right-width="1mm"><fo:leader/></fo:block>
+        </fo:block-container>
+        <fo:block-container position="absolute" top="2mm" left="3mm" >
+        <fo:table table-layout="fixed" inline-progression-dimension="95%">
+    	    <fo:table-column column-width="3cm"/>
+    	    <fo:table-column column-width="0.1cm"/>
+    	    <fo:table-column column-width="3.9cm"/>
+    	    <fo:table-column column-width="0.6cm"/>
+    	    <fo:table-column column-width="2.9cm"/>
+    	    <fo:table-column column-width="0.1cm"/>
+    	    <fo:table-column column-width="5.4cm"/>
+    	    <fo:table-body>
+    	    <fo:table-row>
+    	       <fo:table-cell><fo:block text-align="right"><y:xlate k="sitzgesellschaft"/>:</fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block/></fo:table-cell>
+    	       <fo:table-cell><fo:block>Sample Theorem</fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block>&#xa0;</fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block> </fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block/></fo:table-cell>
+    	       <fo:table-cell><fo:block> </fo:block></fo:table-cell>
+    	    </fo:table-row>
+    	    <fo:table-row>
+    	       <fo:table-cell><fo:block text-align="right"><y:xlate k="manager"/>:</fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block/></fo:table-cell>
+    	       <fo:table-cell><fo:block>Berta Muster, Anton Weibs</fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block>&#xa0;</fo:block></fo:table-cell>
+    	       <fo:table-cell number-rows-spanned="2"><fo:block text-align="right"><y:xlate k="bankverbindung"/>:</fo:block></fo:table-cell>
+    	       <fo:table-cell number-rows-spanned="2"><fo:block/></fo:table-cell>
+    	       <fo:table-cell number-rows-spanned="2"><fo:block>Kopfschmerzbank Moinhättan</fo:block></fo:table-cell>
+    	    </fo:table-row>
+    	    <fo:table-row>
+    	       <fo:table-cell><fo:block text-align="right"><y:xlate k="registergericht"/>:</fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block/></fo:table-cell>
+    	       <fo:table-cell><fo:block>Nied am Main, HRB 12345</fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block>&#xa0;</fo:block></fo:table-cell>
+    	       <!-- fo:table-cell><fo:block> </fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block/></fo:table-cell>
+    	       <fo:table-cell><fo:block>Frankfurt am Main</fo:block></fo:table-cell -->
+    	    </fo:table-row>
+    	    <fo:table-row>
+    	       <fo:table-cell><fo:block text-align="right"><y:xlate k="steuernummer"/>:</fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block/></fo:table-cell>
+    	       <fo:table-cell><fo:block>012 345 67890</fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block>&#xa0;</fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block text-align="right">IBAN:</fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block/></fo:table-cell>
+    	       <fo:table-cell><fo:block>DE11 2233 4455 6677 8899 00</fo:block></fo:table-cell>
+    	    </fo:table-row>
+    	    <fo:table-row>
+    	       <fo:table-cell><fo:block text-align="right"><y:xlate k="ustid"/>:</fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block/></fo:table-cell>
+    	       <fo:table-cell><fo:block>DE123456780</fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block>&#xa0;</fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block text-align="right">BIC/SWIFT:</fo:block></fo:table-cell>
+    	       <fo:table-cell><fo:block/></fo:table-cell>
+    	       <fo:table-cell><fo:block>KOPFDEDBMAI</fo:block></fo:table-cell>
+    	    </fo:table-row>
+    	    </fo:table-body>
+        </fo:table></fo:block-container>
+     </fo:block-container>
+    </fo:block-container>
+</foot>
+
+<foot bbox="0mm" vextent="14mm" name="addr">
+    <!-- footer nur adresse -->
+   <fo:block-container position="absolute" left="4mm" top="-1mm">
+    <fo:block-container position="absolute" left="2cm" width="17cm" height="15mm" top="2mm"  y:mark="mod:border-left-color:color,font-family:sansfont" border-left-color="blue" border-left-style="solid" border-left-width="1mm" font-family="LMSans12" font-size="7pt">
+        <fo:block-container position="absolute" top="0mm" left="0mm" width="100%">
+        <fo:block width="100%"><fo:leader leader-length.optimum="2cm"/><fo:leader leader-length.optimum="15cm" y:mark="mod:color:color" color="blue" leader-pattern="rule" rule-thickness="0.9mm"/></fo:block>
+        </fo:block-container>
+        <fo:block-container position="absolute" top="-4mm" left="0cm" width="95%" height="17mm">
+        <fo:block font-size="12mm" height="12mm" width="95%"  y:mark="mod:border-right-color:color" border-right-color="blue" border-right-style="solid" border-right-width="1mm"><fo:leader/></fo:block>
+        </fo:block-container>
+        <fo:block-container position="absolute" top="4mm" left="2cm" width="12cm">
+            <fo:block text-align="justify" white-space="pre" text-align-last="justify">Sample, Inc.<fo:leader leader-length.minimum="2pt"/>•<fo:leader leader-length.minimum="2pt"/><fo:inline white-space="pre">1, Xtoyth Rd</fo:inline><fo:leader leader-length.minimum="2pt"/>•<fo:leader leader-length.minimum="2pt"/><fo:inline white-space="pre"><y:xlate k="countrycodede"/>22050 Sample Theorem</fo:inline><fo:leader leader-length.minimum="2pt"/>•<fo:leader leader-length.minimum="2pt" /><y:xlate k="countryde"/></fo:block>
+        </fo:block-container>
+    </fo:block-container>
+   </fo:block-container>
+</foot>
+
+<head bbox="0mm" vextent="92mm" name="LHA" form="A">
+    <!-- header mit legaldaten (form A) -->
+    <fo:block-container position="absolute" left="14mm" top="5mm" font-family="LMRoman12" y:mark="mod:font-family:textfont">
+    <y:ref snippet="logo"/>
+    <fo:block-container position="absolute" height="55mm" top="27mm" left="115mm" width="75mm" font-size="8pt" >
+        <fo:table table-layout="fixed" inline-progression-dimension="100%">
+            <fo:table-column column-width="2.7cm"/>
+            <fo:table-column column-width="4.8cm"/>
+            <fo:table-body>
+                <fo:table-row><fo:table-cell><fo:block margin-top="12pt" /></fo:table-cell><fo:table-cell><fo:block margin-top="12pt" font-size="8pt" y:mark="mod:font-family:sansfont" font-family="LMSans12">Sample, Inc.</fo:block></fo:table-cell></fo:table-row>
+                <fo:table-row><fo:table-cell><fo:block/></fo:table-cell><fo:table-cell><fo:block font-size="8pt"  y:mark="mod:font-family:sansfont"  font-family="LMSans12">https://www.sample.inc</fo:block></fo:table-cell></fo:table-row>
+            </fo:table-body>
+        </fo:table>
+        <y:ref snippet="contactetc"/>
+    </fo:block-container>
+    <fo:block-container top="22mm" left="7mm" border-left-width="0px" border-right-width="0px" position="absolute"  height="45mm" width="5mm" border-top-width="0.5mm" border-bottom-width="0.5mm" border-style="solid"  y:mark="mod:border-color:color" border-color="blue"><fo:block/></fo:block-container>
+    <fo:block-container top="22mm" left="88mm" border-left-width="0px" border-right-width="0px" position="absolute"  height="45mm" width="5mm" border-top-width="0.5mm" border-bottom-width="0.5mm" border-style="solid"  y:mark="mod:border-color:color" border-color="blue"><fo:block/></fo:block-container>
+    <fo:block-container position="absolute" top="23mm" left="11mm" width="78mm"><fo:block  y:mark="mod:font-family:sansfont" font-family="LMSans12" text-align="justify" text-align-last="justify" font-size="8pt">Sample, Inc.<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/>•<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/>1, Xtoyth Rd<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/>•<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/>22050 Sample Theorem<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/>•<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/><y:xlate k="countryde"/></fo:block></fo:block-container>
+    <fo:block-container position="absolute" top="28mm" left="11mm" border-width="0pt" space-before="0mm" height="38mm" width="78mm" padding="0mm">
+        <y:ref snippet="toaddress"/>
+    </fo:block-container>
+    </fo:block-container>
+</head>
+
+<head bbox="0mm" vextent="92mm" name="LHC" form="C">
+    <!-- header mit legaldaten (form C) -->
+    <fo:block-container position="absolute" left="14mm" top="5mm" font-family="LMRoman12" y:mark="mod:font-family:textfont">
+    <y:ref snippet="logo"/>
+    <fo:block-container position="absolute" height="55mm" top="27mm" left="115mm" width="75mm" font-size="8pt" >
+        <fo:table table-layout="fixed" inline-progression-dimension="100%">
+            <fo:table-column column-width="2.7cm"/>
+            <fo:table-column column-width="4.8cm"/>
+            <fo:table-body>
+                <fo:table-row><fo:table-cell><fo:block margin-top="12pt" /></fo:table-cell><fo:table-cell><fo:block margin-top="12pt" font-size="8pt" y:mark="mod:font-family:sansfont" font-family="LMSans12">Sample, Inc.</fo:block></fo:table-cell></fo:table-row>
+                <fo:table-row><fo:table-cell><fo:block/></fo:table-cell><fo:table-cell><fo:block font-size="8pt"  y:mark="mod:font-family:sansfont"  font-family="LMSans12">https://www.sample.inc</fo:block></fo:table-cell></fo:table-row>
+            </fo:table-body>
+        </fo:table>
+        <y:ref snippet="contactetc"/>
+    </fo:block-container>
+    <fo:block-container top="29mm" left="7mm" border-left-width="0px" border-right-width="0px" position="absolute"  height="45mm" width="5mm" border-top-width="0.5mm" border-bottom-width="0.5mm" border-style="solid"  y:mark="mod:border-color:color" border-color="blue"><fo:block/></fo:block-container>
+    <fo:block-container top="29mm" left="88mm" border-left-width="0px" border-right-width="0px" position="absolute"  height="45mm" width="5mm" border-top-width="0.5mm" border-bottom-width="0.5mm" border-style="solid"  y:mark="mod:border-color:color" border-color="blue"><fo:block/></fo:block-container>
+    <fo:block-container position="absolute" top="32mm" left="11mm" width="78mm"><fo:block  y:mark="mod:font-family:sansfont" font-family="LMSans12" text-align="justify" text-align-last="justify" font-size="8pt">Sample, Inc.<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/>•<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/>1, Xtoyth Rd<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/>•<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/>22050 Sample Theorem<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/>•<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/><y:xlate k="countryde"/></fo:block></fo:block-container>
+    <fo:block-container position="absolute" top="37mm" left="11mm" border-width="0pt" space-before="0mm" height="38mm" width="78mm" padding="0mm">
+        <y:ref snippet="toaddress"/>
+    </fo:block-container>
+    </fo:block-container>
+</head>
+
+<head bbox="1mm" vextent="110mm" name="LHB" form="B">
+    <!-- header mit legaldaten (form B) -->
+    <fo:block-container position="absolute" left="14mm" top="5mm" font-family="LMRoman12" y:mark="mod:font-family:textfont">
+        <fo:block-container position="absolute" left="0.4cm" top="0cm" width="512.46pt" height="86.18pt" y:mark="mod:border-color:color" border-width="2pt" border-style="dotted" border-color="blue"><fo:block/></fo:block-container>
+    <fo:block-container position="absolute" height="55mm" top="40mm" left="115mm" width="75mm" font-size="8pt" >
+        <fo:table table-layout="fixed" inline-progression-dimension="100%">
+            <fo:table-column column-width="2.7cm"/>
+            <fo:table-column column-width="4.8cm"/>
+            <fo:table-body>
+                <fo:table-row><fo:table-cell><fo:block /></fo:table-cell><fo:table-cell><fo:block font-size="8pt"  y:mark="mod:font-family:sansfont" font-family="LMSans12">Sample, Inc.</fo:block></fo:table-cell></fo:table-row>
+                <fo:table-row><fo:table-cell><fo:block/></fo:table-cell><fo:table-cell><fo:block font-size="8pt"  y:mark="mod:font-family:sansfont"  font-family="LMSans12">https://www.sample.inc</fo:block></fo:table-cell></fo:table-row>
+            </fo:table-body>
+        </fo:table>
+        <y:ref snippet="contactetc"/>
+    </fo:block-container>
+    <fo:block-container top="40mm" left="7mm" border-left-width="0px" border-right-width="0px" position="absolute"  height="45mm" width="5mm" border-top-width="0.5mm" border-bottom-width="0.5mm" border-style="solid"  y:mark="mod:border-color:color" border-color="blue"><fo:block/></fo:block-container>
+    <fo:block-container top="40mm" left="88mm" border-left-width="0px" border-right-width="0px" position="absolute"  height="45mm" width="5mm" border-top-width="0.5mm" border-bottom-width="0.5mm" border-style="solid"  y:mark="mod:border-color:color" border-color="blue"><fo:block/></fo:block-container>
+    <fo:block-container position="absolute" top="41mm" left="11mm" width="78mm"><fo:block  y:mark="mod:font-family:sansfont" font-family="LMSans12" text-align="justify" text-align-last="justify" font-size="8pt">Sample, Inc.<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/>•<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/>1, Xtoyth Rd<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/>•<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/>22050 Sample Theorem<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/>•<fo:leader leader-length.minimum="1pt" leader-length.optimum="3pt"/><y:xlate k="countryde"/></fo:block></fo:block-container>
+    <fo:block-container position="absolute" top="45mm" left="11mm" border-width="0pt" space-before="0mm" height="38mm" width="78mm" padding="0mm">
+        <y:ref snippet="toaddress"/>
+    </fo:block-container>
+    </fo:block-container>
+</head>
+
+<head bbox="1mm" vextent="35mm" name="logo" form="A">
+    <fo:block-container position="absolute" left="14mm" top="5mm">
+        <y:ref snippet="logo"/>
+    </fo:block-container>
+</head>
+<!-- //foots / heads -->
+
+<!-- =============================================================== -->
+<!-- =============================================================== -->
+<!-- =============================================================== -->
+<!-- =============================================================== -->
+
+<!-- normale snippets -->
+<y:snippet id="contactetc">
+	  <fo:table table-layout="fixed" inline-progression-dimension="100%" y:mark="mod:font-family:sansfont" font-family="LMSans12">
+	    <fo:table-column column-width="2.7cm"/>
+	    <fo:table-column column-width="4cm"/><fo:table-body>
+	    <fo:table-row><fo:table-cell><fo:block  margin-top="12pt" font-size="7.5pt"  line-height="inherit" ><y:xlate k="ansprechpartner"/></fo:block></fo:table-cell><fo:table-cell><fo:block y:mark="mod:font-family:textfont" font-family="LMRoman12"   margin-top="12pt"><fo:inline y:mark="aspname"/></fo:block></fo:table-cell></fo:table-row>
+	    <fo:table-row><fo:table-cell><fo:block font-size="7.5pt">&#xa0;</fo:block></fo:table-cell><fo:table-cell><fo:block y:mark="mod:font-family:textfont" font-family="LMRoman12" ><fo:inline y:mark="asprole"/></fo:block></fo:table-cell></fo:table-row>
+	    <fo:table-row><fo:table-cell><fo:block font-size="7.5pt"  line-height="inherit" >email:</fo:block></fo:table-cell><fo:table-cell><fo:block y:mark="mod:font-family:textfont" font-family="LMRoman12"  ><fo:inline y:mark="aspemail"/></fo:block></fo:table-cell></fo:table-row>
+	    <fo:table-row><fo:table-cell><fo:block font-size="7.5pt"  line-height="inherit" >tel:</fo:block></fo:table-cell><fo:table-cell><fo:block y:mark="mod:font-family:ntextfont" font-family="nLMRoman12"><fo:inline y:mark="asptel"/></fo:block></fo:table-cell></fo:table-row>
+	    <fo:table-row><fo:table-cell><fo:block font-size="7.5pt"  line-height="inherit" >fax:</fo:block></fo:table-cell><fo:table-cell><fo:block y:mark="mod:font-family:ntextfont" font-family="nLMRoman12"><fo:inline>+49 </fo:inline><fo:inline> 1234 </fo:inline><fo:inline> 567890</fo:inline></fo:block></fo:table-cell></fo:table-row>
+	    <fo:table-row><fo:table-cell><fo:block/></fo:table-cell><fo:table-cell><fo:block>&#xa0;</fo:block></fo:table-cell></fo:table-row>
+	    <fo:table-row><fo:table-cell><fo:block font-size="7.5pt"  line-height="inherit" ><y:xlate k="ihrenachricht"/></fo:block></fo:table-cell><fo:table-cell y:mark="mod:font-family:textfont" font-family="LMRoman12" number-rows-spanned="2"><fo:block><fo:inline y:mark="yourref"> </fo:inline></fo:block></fo:table-cell></fo:table-row>
+	    <fo:table-row><fo:table-cell><fo:block>&#xa0;</fo:block></fo:table-cell></fo:table-row>
+	    <fo:table-row><fo:table-cell><fo:block font-size="7.5pt"   line-height="inherit"><y:xlate k="datum"/></fo:block></fo:table-cell><fo:table-cell y:mark="mod:font-family:textfont" font-family="LMRoman12"><fo:block y:mark="datum">hier könnte Ihr Datum stehen</fo:block></fo:table-cell></fo:table-row>
+        </fo:table-body>
+    </fo:table>
+</y:snippet>
+
+<y:snippet id="toaddress">
+    <!-- postfont: (default LMRoman12 - not for postal; alt: Linux Libertine iff rest also , not for sending, for sending use: Univers or nUnivers -->
+        <fo:block text-align="start" font-size="10pt" padding-top.minimum="0mm"  y:mark="mod:font-family:sansfont" font-family="LMSans12" font-style="normal" font-weight="normal">
+            <fo:block-container height="2.3em"><fo:block line-height="115%" font-weight="bold" font-family="LMRoman12" y:mark="mod:font-family:textfont" white-space="pre"><!-- zustellhinweise --><fo:inline y:mark="addr00"></fo:inline></fo:block></fo:block-container>
+            <fo:block-container height="8.3em" display-align="center"><fo:block font-family="LMRoman12" y:mark="mod:font-family:addrfont" line-height="115%" white-space="pre"><fo:inline  y:mark="addr"><!-- addresslines --></fo:inline></fo:block></fo:block-container>
+          </fo:block>
+</y:snippet>
+
+<y:snippet id="logo">
+        <fo:block-container position="absolute" left="0.88cm" top="0cm" width="500.7pt" height="50.1pt" y:mark="mod:border-color:color" border-width="2pt" border-style="dotted" border-color="blue"><fo:block/></fo:block-container>
+</y:snippet>
+<!-- // normale snippets -->
+
+
+ <y:for>
+    <y:xlate k="brief">
+        <de is="Brief"/>
+        <en is="Letter"/>
+    </y:xlate>
+    
+    <y:xlate k="letter">
+        <de is="Brief"/>
+        <en is="Letter"/>
+    </y:xlate>
+    
+    <y:xlate k="rechnung">
+        <de is="Rechnung"/>
+        <en is="Invoice"/>
+    </y:xlate>
+    
+    <y:xlate k="invoice">
+        <de is="Rechnung"/>
+        <en is="Invoice"/>
+    </y:xlate>
+    
+    <y:xlate k="nr">
+        <de is="Nr."/>
+        <en is="No."/>
+    </y:xlate>
+
+    <y:xlate k="lieferschein">
+        <de is="Lieferschein"/>
+        <en is="Bill of Delivery"/>
+    </y:xlate>
+    
+    <y:xlate k="invoice-reminder">
+        <de is="Zahlungserinnerung"/>
+        <en is="Reminder"/>
+    </y:xlate>
+    
+    <y:xlate k="rechnungsempf">
+        <de is="Empfänger"/>
+        <en is="Bill to"/>
+    </y:xlate>
+    <y:xlate k="absender">
+        <de is="Absender"/>
+        <en is="From"/>
+    </y:xlate>
+
+    <y:xlate k="datum">
+        <de is="Datum"/>
+        <en is="Date"/>
+    </y:xlate>
+
+    <y:xlate k="ustid">
+        <de is="USt. ID Nr."/>
+        <en is="VAT ID No"/>
+    </y:xlate>
+
+    <zahlungserinn lang="de" is="Zahlungserinnerung"/>
+    <zahlungserinn lang="en" is="Reminder for Payment"/>
+
+    <lieferdatum>
+        <de is="Datum Leistung/Lieferung"/>
+        <en is="Date of delivery"/>
+    </lieferdatum>
+
+    <kundennummer>
+        <de is="Kundennummer"/>
+        <en is="Customer Number"/>
+    </kundennummer>
+
+    <pos lang="de" is="Pos."/>
+    <pos lang="en" is="Pos."/>
+
+    <leistung>
+        <de is="Leistung"/>
+        <en is="Description"/>
+    </leistung>
+
+    <anzahl>
+        <de is="Anzahl"/>
+        <en is="Qty"/>
+    </anzahl>
+
+    <satz>
+        <de is="Satz"/>
+        <en is="Item Prc."/>
+    </satz>
+
+    <betrag>
+        <de is="Betrag"/>
+        <en is="Amount"/>
+    </betrag>
+
+    <nettosumme lang="de" is="Nettosumme"/>
+    <nettosumme lang="en" is="Net Sum"/>
+
+    <gesmwst lang="de" is="Ges. Mehrwertsteuer aus"/>
+    <gesmwst lang="en" is="VAT from"/>
+
+    <rechnungsbetrag lang="de" is="Rechnungsbetrag"/>
+    <rechnungsbetrag lang="en" is="Total"/>
+
+    <zahlbed lang="de" is="Zahlungsbedingungen"/>
+    <zahlbed lang="en" is="Conditions of payment"/>
+
+    <bankverbindung lang="de" is="Bankverbindung"/>
+    <bankverbindung lang="en" is="Banking"/>
+
+    <bitterechnungsnummer lang="de" is="Bitte geben Sie bei der Zahlung unsere Rechnungsnummer an."/>
+    <bitterechnungsnummer lang="en" is="Please specify Invoice Number on payment."/>
+
+    <dankeauftrag lang="de" is="Vielen Dank für Ihren Auftrag."/>
+    <dankeauftrag lang="en" is="Thank you for your order."/>
+
+    <y:xlate k="seite">
+        <de is="Seite"/>
+        <en is="Page"/>
+    </y:xlate>
+
+    <y:xlate k="sitzgesellschaft">
+        <de is="Sitz der Gesellschaft"/>
+        <en is="Place of Business"/>
+    </y:xlate>
+
+  <y:xlate k="manager">
+        <de is="Geschäftsführer"/>
+        <en is="Manager"/>
+    </y:xlate>
+
+  <y:xlate k="officemanager">
+        <de is="Sekretariat"/>
+        <en is="Office Manager"/>
+    </y:xlate>
+
+    <y:xlate k="registergericht">
+        <de is="Registergericht"/>
+        <en is="Registration Office"/>
+    </y:xlate>
+
+    <y:xlate k="steuernummer">
+        <de  is="Steuernummer"/>
+        <en is="Tax Number"/>
+    </y:xlate>
+
+    <y:xlate k="ansprechpartner">
+        <de is="Ansprechpartner:"/>
+        <en is="Contact:"/>
+    </y:xlate>
+
+    <y:xlate k="countrycodede">
+        <de is=""/>
+        <en is="DE - "/>
+    </y:xlate>
+
+    <y:xlate k="countryde">
+        <de is="DE"/>
+        <en is="Germany"/>
+    </y:xlate>
+
+    <y:xlate k="ihrenachricht">
+        <de is="Ihre Nachricht:"/>
+        <en is="Your Reference:"/>
+    </y:xlate>
+
+    
+    <y:xlate k="mfg">
+        <de is="Mit freundlichen Grüßen"/>
+        <en is="Kind Regards"/>
+    </y:xlate>
+    
+    <y:xlate k="anlagen">
+        <de is="Anlagen:"/>
+        <en is="Encl:"/>
+    </y:xlate>
+    
+    <y:xlate k="seelink">
+        <de is="Klicken zur eingebetteten Datei:"/>
+        <en is="Click to see embedded:"/>
+    </y:xlate>
+    
+    <y:xlate k="signedby">
+        <de is="Digital signiert von:"/>
+        <en is="Digitally signed by:"/>
+    </y:xlate>
+</y:for>
+
+</config>
