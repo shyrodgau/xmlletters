@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:pdfaid="http://www.aiim.org/pdfa/ns/id/" 
   xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
   xmlns:y="http://xmlns.hydrografix.com/letters" 
-  y:version="$Id$"
+  y:version="20190127"
   y:thisname="letter_simple_outline.fo"
   xml:lang="de">
     <y:generate-page-masters/>

@@ -1,6 +1,6 @@
 <config xmlns="http://xmlns.hydrografix.com/letters/config" 
    xmlns:y="http://xmlns.hydrografix.com/letters"
-   xmlns:fo="http://www.w3.org/1999/XSL/Format" version="$Id$">
+   xmlns:fo="http://www.w3.org/1999/XSL/Format" version="20190127">
 
 <modgroups>
     <modgroup name="*default*" mods="versfont:LMMono12"/>

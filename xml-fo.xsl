@@ -268,7 +268,7 @@ lieferschein                 hclieferschein-neu      letterB
 <!--                         -->
 <!-- V E R S I O N           -->
 <!--                         -->
-    <xsl:variable name="xslversion">$Id$</xsl:variable>
+    <xsl:variable name="xslversion">20190127</xsl:variable>
 
 
     <xsl:variable name="timestring" select="concat(date:year(),'-',str:align(date:month-in-year(),'00','right'),'-',str:align(date:day-in-month(),'00','right'),'T',str:align(date:hour-in-day(),'00','right'),':',str:align(date:minute-in-hour(),'00','right'),':',str:align(date:second-in-minute(),'00','right'))"/>
